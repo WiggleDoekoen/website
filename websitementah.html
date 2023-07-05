@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peta Kota Sukabumi</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Peta Kota Sukabumi</h1>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+    <script>
+        function initMap() {
+            // Buat objek peta
+            var map = new OpenLayers.Map("map");
+
+            // Buat layer untuk OpenStreetMap
+            var mapLayer = new OpenLayers.Layer.OSM();
+
+            // Tambahkan layer ke peta
+            map.addLayer(mapLayer);
+
+            // Tentukan koordinat dan level zoom awal (Kota Sukabumi)
+            var lonLat = new OpenLayers.LonLat(106.9273, -6.9222).transform(
+                new OpenLayers.Projection("EPSG:4326"), // WGS84
+                map.getProjectionObject() // Sistem koordinat peta
+            );
+            var zoomLevel = 13;
+
+            // Posisikan peta pada koordinat dan level zoom awal
+            map.setCenter(lonLat, zoomLevel);
+
+            // Tambahkan marker kolam renang
+            var markers = [
+                {
+                    name: 'Kolam tirta Nirwana Sukabumi',
+                    lon: 106.93883259285052,
+                    lat: -6.937243878872958, 
+                    url: 'https://goo.gl/maps/4ioykCv4YeutKbzEA'
+                },
+                {
+                    name: 'Kolam Pesona Pangrango',
+                    lon: 106.93639572058899,
+                    lat: -6.8986913735661135,  
+                    url: 'https://goo.gl/maps/wv38qjSonDceWN3F8'
+
+                },
+                {
+                    name: 'Kolam Renang Cigunung',
+                    lon: 106.90466523014852,
+                    lat: -6.906717620408651,
+                    url: 'https://goo.gl/maps/2dwosThBBYaCfDqd9'
+
+                },
+                {
+                    name: 'Kolam Renang Ali',
+                    lon: 106.86219513271173,
+                    lat: -6.900257757200214, 
+                    url: 'https://goo.gl/maps/DSgYC3gixF7XAxfL9'
+
+                },
+                {
+                    name: 'Kolam Sport Garden',
+                    lon: 106.91124200240446,
+                    lat: -6.95258383516324, 
+                    url: 'https://goo.gl/maps/st8z9DgQYUrxtyFp9'
+
+                },
+                {
+                    name: 'Kolam renang payung abah dede',
+                    lon: 106.91295862103068,
+                    lat: -6.922592639229289, 
+                    url: 'https://goo.gl/maps/S1FbwsskxF1ZDSVt5'
+
+                },
+                {
+                    name: 'Kolam Ovis Waterboom',
+                    lon: 106.9672036157817,
+                    lat: -6.925319190505561, 
+                    url: 'https://goo.gl/maps/j8xQhiMKJQmJZFH87'
+
+                },
+                {
+                    name: 'Kolam Renang Rizzy Azzahra',
+                    lon: 106.94189470611585,
+                    lat: -6.887402893471038, 
+                    url: 'https://goo.gl/maps/4P5HFRh3HgtoU7Aq8'
+                },
+                {
+                    name: 'Kolam Renang Abah Uci',
+                    lon: 106.95047195268545,
+                    lat: -6.8992026289618025, 
+                    url: 'https://goo.gl/maps/RDwjuqzAWAX3VDnXA'
+                }
+            ];
+
+            // Buat layer untuk marker
+            var markerLayer = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markerLayer);
+
+            // Tambahkan marker ke layer
+            for (var i = 0; i < markers.length; i++) {
+                var marker = new OpenLayers.Marker(
+                    new OpenLayers.LonLat(markers[i].lon, markers[i].lat).transform(
+                        new OpenLayers.Projection("EPSG:4326"), // WGS84
+                        map.getProjectionObject() // Sistem koordinat peta
+                    )
+                );
+                markerLayer.addMarker(marker);
+
+                // Tambahkan event click untuk mengarahkan ke halaman destinasi
+                marker.events.register('click', marker, function() {
+                    window.location.href = this.url;
+                });
+            }
+        }
+
+        // Panggil fungsi initMap saat halaman selesai diload
+        window.onload = initMap;
+    </script>
+</body>
+</html>
